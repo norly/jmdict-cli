@@ -161,7 +161,8 @@ void guessLanguage(const std::string& subject) {
     if (options::source == options::JAPANESE && !isUTF8)
         options::source = options::JAPANESE_ROMAJI;
     else if (options::source == options::UNKNOWN)
-        options::source = isUTF8 ? options::JAPANESE : options::NOT_JAPANESE;
+    //    options::source = isUTF8 ? options::JAPANESE : options::NOT_JAPANESE;
+        options::source = isUTF8 ? options::JAPANESE : options::UNKNOWN;
 }
 
 int main(int argc, char** argv)
@@ -180,8 +181,12 @@ try {
         fromJapanese(subject);
     else if (options::source == options::JAPANESE_ROMAJI)
         fromRomaji(subject);
-    else
+    else if (options::source == options::NOT_JAPANESE)
         toJapanese(subject);
+    else {
+        fromRomaji(subject);
+        toJapanese(subject);
+    }
     cout << entries << " match(es) found." << endl;
 
     return EXIT_SUCCESS;
